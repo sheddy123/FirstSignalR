@@ -20,12 +20,16 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
-app.MapStaticAssets();
-app.MapRazorPages()
-   .WithStaticAssets();
+app.MapHub<ViewHub>("/hubs/view");
+app.MapHub<ChatHub>("/hubs/chat");
 
-app.MapHub<ChatHub>("/chatHub");
+//app.UseAuthorization();
+
+//app.MapStaticAssets();
+//app.MapRazorPages()
+//   .WithStaticAssets();
 
 app.Run();
