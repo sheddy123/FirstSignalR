@@ -1,0 +1,1 @@
+{"version":3,"file":"customLogger.js","sourceRoot":"","sources":["../client/customLogger.ts"],"names":[],"mappings":"AAEA,MAAM,OAAO,YAAY;IACrB,GAAG,CAAC,QAAkB,EAAE,OAAe;QACnC,OAAO,CAAC,GAAG,CAAC,GAAG,QAAQ,OAAO,OAAO,EAAE,CAAC,CAAC;IAC7C,CAAC;CACJ"}

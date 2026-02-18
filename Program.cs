@@ -25,6 +25,7 @@ app.UseStaticFiles();
 
 app.MapHub<ViewHub>("/hubs/view");
 app.MapHub<ChatHub>("/hubs/chat");
+app.MapHub<ColorHub>("/hubs/color");
 
 //app.UseAuthorization();
 
