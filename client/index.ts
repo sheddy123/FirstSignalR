@@ -1,5 +1,7 @@
 ﻿import * as signalR from '@microsoft/signalr';
 import { CustomLogger } from "./customLogger";
+import { MessagePackHubProtocol } from "@microsoft/signalr-protocol-msgpack"
+
 
 let btnJoinYellow = document.getElementById("btnJoinYellow");
 let btnJoinBlue = document.getElementById("btnJoinBlue");
@@ -10,10 +12,35 @@ let btnTriggerOrange = document.getElementById("btnTriggerOrange");
 
 //create connection
 let connection = new signalR.HubConnectionBuilder()
+    .withAutomaticReconnect()
     //.configureLogging(signalR.LogLevel.Trace)
     //implementing custom logger
     .configureLogging(new CustomLogger())
-    .withUrl('/hubs/view').withUrl("/hubs/color").build();
+    .withHubProtocol(new MessagePackHubProtocol())
+    .withUrl('/hubs/view').build();
+let colorConnection = new signalR.HubConnectionBuilder()
+    .withAutomaticReconnect()
+    //.configureLogging(signalR.LogLevel.Trace)
+    //implementing custom logger
+    .configureLogging(new CustomLogger())
+    .withHubProtocol(new MessagePackHubProtocol())
+    .withUrl("/hubs/color").build();
+
+let body = document.getElementsByTagName("body")[0];
+
+// Connection Events
+connection.onreconnected((connectionId?: string) => {
+    body.style.backgroundColor = "green";
+});
+
+connection.onreconnecting((error?: Error) => {
+    body.style.backgroundColor = "yellow";
+});
+
+connection.onclose((error?: Error) => {
+    body.style.backgroundColor = "red";
+});
+
 
 btnJoinYellow?.addEventListener("click", () => { connection.invoke("JoinGroup", "Yellow"); });
 btnJoinBlue?.addEventListener("click", () => { connection.invoke("JoinGroup", "Blue"); });
